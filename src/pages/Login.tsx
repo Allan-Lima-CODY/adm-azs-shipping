@@ -9,8 +9,8 @@ import { apiService } from "@/services/api";
 import { Package } from "lucide-react";
 
 const loginSchema = z.object({
-  email: z.string().trim().email({ message: "Invalid email format" }),
-  password: z.string().trim().min(6, { message: "Password must be at least 6 characters" }),
+  email: z.string().trim().email({ message: "Formato de email inválido!" }),
+  password: z.string().trim().min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
 });
 
 const Login = () => {
@@ -46,8 +46,8 @@ const Login = () => {
       
       setModal({
         isOpen: true,
-        title: "Success!",
-        message: "Login successful. Welcome back!",
+        title: "Sucesso!",
+        message: "Bem-vindo(a)!",
         type: "success",
       });
 
@@ -66,7 +66,7 @@ const Login = () => {
       } else if (error instanceof Error) {
         setModal({
           isOpen: true,
-          title: "Login Failed",
+          title: "Falha No Login",
           message: error.message,
           type: "error",
         });
@@ -85,8 +85,8 @@ const Login = () => {
               <Package className="h-10 w-10 text-primary-foreground" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-foreground">AdmazsShipping</h1>
-          <p className="text-muted-foreground">Sign in to your account</p>
+          <h1 className="text-4xl font-bold text-foreground">Shipping</h1>
+          <p className="text-muted-foreground">Faça login com sua conta</p>
         </div>
 
         <div className="bg-card rounded-2xl shadow-xl border border-border p-8 space-y-6">
@@ -96,7 +96,7 @@ const Login = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="your@email.com"
+                placeholder="seuemail@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -105,7 +105,7 @@ const Login = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
                 type="password"
@@ -122,7 +122,7 @@ const Login = () => {
               disabled={isLoading}
               className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
             >
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? "Login..." : "Login"}
             </Button>
           </form>
 
@@ -131,7 +131,7 @@ const Login = () => {
               <span className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">Or</span>
+              <span className="bg-card px-2 text-muted-foreground">Ou</span>
             </div>
           </div>
 
@@ -141,7 +141,7 @@ const Login = () => {
             onClick={() => navigate("/register")}
             className="w-full h-11 border-2 hover:bg-accent/10 font-medium"
           >
-            Create New Account
+            Criar nova conta
           </Button>
         </div>
       </div>

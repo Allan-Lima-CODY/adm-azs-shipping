@@ -19,14 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Plus, Trash2, Eye, Pencil, Save, X } from "lucide-react";
 import Modal from "@/components/Modal";
 import { format } from "date-fns";
@@ -64,7 +56,7 @@ const Freight = () => {
   const [currentSearch, setCurrentSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [totalPages, setTotalPages] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
   
   const [modal, setModal] = useState<{
     isOpen: boolean;
@@ -165,14 +157,15 @@ const Freight = () => {
   const loadFreightValues = async (freightId: number, search?: string, page: number = 0, size: number = 10) => {
     if (PREVIEW_MODE) {
       setFreightValues(mockValues);
-      setTotalPages(1);
+      setHasNextPage(false);
       return;
     }
 
     try {
       const data = await apiService.getFreightValues(freightId, search, page, size);
       setFreightValues(data);
-      setTotalPages(Math.ceil(data.length / size));
+      // Se retornou menos itens que o tamanho da página, não há próxima página
+      setHasNextPage(data.length === size);
     } catch (error: any) {
       setModal({
         isOpen: true,
@@ -180,6 +173,8 @@ const Freight = () => {
         message: error.message || "Erro ao carregar valores do frete",
         type: "error",
       });
+      setFreightValues([]);
+      setHasNextPage(false);
     }
   };
 
@@ -282,11 +277,8 @@ const Freight = () => {
       await apiService.createFreight({
         name: newFreightName,
         customerId,
-        createdAt: new Date().toISOString(),
-        properties: addedProperties.map(p => ({
-          propertyId: p.propertyId,
-          value: p.value,
-        })),
+        createdAt: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19),
+        properties: addedProperties.map(p => ({propertyId: p.propertyId, value: p.value})),
       });
 
       setModal({
@@ -374,7 +366,7 @@ const Freight = () => {
   };
 
   const handlePageChange = (page: number) => {
-    if (!selectedFreight || page < 0 || page >= totalPages) return;
+    if (!selectedFreight || page < 0) return;
     setCurrentPage(page);
     loadFreightValues(selectedFreight.id, currentSearch, page, pageSize);
   };
@@ -730,37 +722,29 @@ const Freight = () => {
             </Table>
           </div>
 
-          {totalPages > 1 && (
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    className={currentPage === 0 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                  />
-                </PaginationItem>
-                {Array.from({ length: totalPages }, (_, i) => (
-                  <PaginationItem key={i}>
-                    <PaginationLink
-                      onClick={() => handlePageChange(i)}
-                      isActive={currentPage === i}
-                      className="cursor-pointer"
-                    >
-                      {i + 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-                <PaginationItem>
-                  <PaginationNext
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    className={
-                      currentPage === totalPages - 1 ? "pointer-events-none opacity-50" : "cursor-pointer"
-                    }
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          )}
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 0}
+                variant="outline"
+                size="sm"
+              >
+                ← Anterior
+              </Button>
+              <span className="text-sm text-muted-foreground px-4">
+                Página {currentPage + 1}
+              </span>
+              <Button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={!hasNextPage}
+                variant="outline"
+                size="sm"
+              >
+                Próxima →
+              </Button>
+            </div>
+          </div>
         </div>
 
         <Modal

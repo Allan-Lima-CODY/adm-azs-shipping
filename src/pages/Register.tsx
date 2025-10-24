@@ -12,10 +12,10 @@ const registerSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(2, { message: "Name must have at least 2 characters" })
-    .max(100, { message: "Name must have at most 100 characters" }),
-  email: z.string().trim().email({ message: "Email format is invalid" }),
-  password: z.string().trim().min(6, { message: "Password must be at least 6 characters long" }),
+    .min(2, { message: "Nome deve ter no mínimo 2 caracteres" })
+    .max(100, { message: "Nome deve ter no máximo 100 caracteres" }),
+  email: z.string().trim().email({ message: "Formato de email inválido!" }),
+  password: z.string().trim().min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
 });
 
 const Register = () => {
@@ -52,8 +52,8 @@ const Register = () => {
 
       setModal({
         isOpen: true,
-        title: "Success!",
-        message: "Customer created successfully! You can now login with your credentials.",
+        title: "Sucesso!",
+        message: "Cliente criado com sucesso! Você pode logar com suas credenciais.",
         type: "success",
         onCloseCallback: () => {
           navigate("/login");
@@ -71,7 +71,7 @@ const Register = () => {
       } else if (error instanceof Error) {
         setModal({
           isOpen: true,
-          title: "Registration Failed",
+          title: "Falha No Cadastro",
           message: error.message,
           type: "error",
         });
@@ -97,14 +97,14 @@ const Register = () => {
               <Package className="h-10 w-10 text-accent-foreground" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-foreground">Create Account</h1>
-          <p className="text-muted-foreground">Join AdmazsShipping today</p>
+          <h1 className="text-4xl font-bold text-foreground">Criar Conta</h1>
+          <p className="text-muted-foreground">Entre para a Shipping hoje</p>
         </div>
 
         <div className="bg-card rounded-2xl shadow-xl border border-border p-8 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">Nome</Label>
               <Input
                 id="name"
                 type="text"
@@ -121,7 +121,7 @@ const Register = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="your@email.com"
+                placeholder="seuemail@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -130,7 +130,7 @@ const Register = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
                 type="password"
@@ -141,7 +141,7 @@ const Register = () => {
                 className="h-11"
               />
               <p className="text-xs text-muted-foreground">
-                Password must be at least 6 characters long
+                Senha deve ter no mínimo 6 caracteres
               </p>
             </div>
 
@@ -150,7 +150,7 @@ const Register = () => {
               disabled={isLoading}
               className="w-full h-11 bg-accent hover:bg-accent/90 text-accent-foreground font-medium"
             >
-              {isLoading ? "Creating account..." : "Create Account"}
+              {isLoading ? "Criando conta..." : "Criar Conta"}
             </Button>
           </form>
 
@@ -160,7 +160,7 @@ const Register = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-card px-2 text-muted-foreground">
-                Already have an account?
+                Já tem uma conta?
               </span>
             </div>
           </div>
@@ -172,7 +172,7 @@ const Register = () => {
             className="w-full h-11 border-2 hover:bg-primary/10 font-medium"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Login
+            Login
           </Button>
         </div>
       </div>

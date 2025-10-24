@@ -25,7 +25,7 @@ export function DashboardHeader({ customerName }: DashboardHeaderProps) {
               <Package className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-card-foreground">AdmazsShipping</h1>
+              <h1 className="text-lg font-bold text-card-foreground">Shipping</h1>
               <p className="text-xs text-card-foreground/70">Olá, {customerName}</p>
             </div>
           </div>
