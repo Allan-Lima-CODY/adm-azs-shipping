@@ -212,8 +212,8 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Erro ao excluir propriedade" }));
-      throw new Error(error.message || "Erro ao excluir propriedade");
+      const error = await response.json().catch(() => ({ message: "Error deleting property" }));
+      throw new Error(error.message || "Error deleting property");
     }
   }
 
@@ -225,8 +225,8 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Erro ao criar frete" }));
-      throw new Error(error.message || "Erro ao criar frete");
+      const error = await response.json().catch(() => ({ message: "Error creating freight" }));
+      throw new Error(error.message || "Error creating freight");
     }
 
     return response.json();
@@ -239,8 +239,8 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Erro ao buscar fretes" }));
-      throw new Error(error.message || "Erro ao buscar fretes");
+      const error = await response.json().catch(() => ({ message: "Error fetching freights" }));
+      throw new Error(error.message || "Error fetching freights");
     }
 
     return response.json();
@@ -267,8 +267,8 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Erro ao buscar valores do frete" }));
-      throw new Error(error.message || "Erro ao buscar valores do frete");
+      const error = await response.json().catch(() => ({ message: "Error fetching freight values" }));
+      throw new Error(error.message || "Error fetching freight values");
     }
 
     return response.json();
@@ -285,8 +285,8 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Erro ao atualizar valores" }));
-      throw new Error(error.message || "Erro ao atualizar valores");
+      const error = await response.json().catch(() => ({ message: "Error updating values" }));
+      throw new Error(error.message || "Error updating values");
     }
   }
 
@@ -298,8 +298,8 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Erro ao atualizar nome do frete" }));
-      throw new Error(error.message || "Erro ao atualizar nome do frete");
+      const error = await response.json().catch(() => ({ message: "Error updating freight name" }));
+      throw new Error(error.message || "Error updating freight name");
     }
   }
 
@@ -311,8 +311,8 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Erro ao excluir valores" }));
-      throw new Error(error.message || "Erro ao excluir valores");
+      const error = await response.json().catch(() => ({ message: "Error deleting values" }));
+      throw new Error(error.message || "Error deleting values");
     }
   }
 
@@ -323,8 +323,8 @@ class ApiService {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Erro ao excluir frete" }));
-      throw new Error(error.message || "Erro ao excluir frete");
+      const error = await response.json().catch(() => ({ message: "Error deleting freight" }));
+      throw new Error(error.message || "Error deleting freight");
     }
   }
 }
